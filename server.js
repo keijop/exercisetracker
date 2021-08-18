@@ -6,6 +6,7 @@ require('dotenv').config()
 const createUser = require('./controllers/createUser.js')
 const getUsers = require('./controllers/getUsers.js')
 const logExercise = require('./controllers/logExercise.js')
+const getExerciseLog = require('./controllers/getExerciseLog.js')
 const port = process.env.PORT || 3000
 
 app.use(cors())
@@ -18,18 +19,8 @@ app.get('/', (req, res) => {
 
 app.get('/api/users', getUsers)
 
-app.get('/api/users/:_id/logs', (req,res) => {
-  res.json({
-  username: "fcc_test",
-  count: 1,
-  _id: "5fd01a41c5b5cf05d080502f",
-  log: [{
-    description: "test",
-    duration: 60,
-    date: "Mon Jan 01 1990",
-  }]
-  })
-})
+app.get('/api/users/:_id/logs', getExerciseLog)
+
 
 app.post('/api/users', createUser)
 

@@ -6,10 +6,10 @@ const logExercise = async (req,res) => {
 		//create obj and check if date is null, if null delete date prop 
 		const reqBody = Object.assign({}, req.body)
 		!reqBody.date ? delete reqBody.date : ''
-		
+		console.log(req.body)
 		//pass obj to Exercise.create
 		const newExercise = await Exercise.create(reqBody)
-		const user = await User.findById(reqBody[':_id'])
+		const user = await User.findById(reqBody.userId)
 
 		//Object.assign(user, newExercise)
 
@@ -18,7 +18,7 @@ const logExercise = async (req,res) => {
 		// create new exerc obj where __v and _id props are omitted
 		// clone both obj into new obj and format date 
 		const { __v, ...userDataObj } = user._doc
-		const { __v : v, _id, ...exerciseDataObj } = newExercise._doc
+		const { __v : v, _id, userId, ...exerciseDataObj } = newExercise._doc
 		const exerciseLogObj = Object.assign(userDataObj, exerciseDataObj)
 
 		exerciseLogObj.date = exerciseLogObj.date.toDateString()
