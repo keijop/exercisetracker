@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const exerciseSchema = new mongoose.Schema({
-	userId : {
+	username : {
 		type : String,
 		required : true
 	},
@@ -9,7 +9,7 @@ const exerciseSchema = new mongoose.Schema({
 		type : Number,
 		required : [true, 'Duration is required']
 	},
-		description : {
+	description : {
 		type : String,
 		required : [true, 'Description is required']
 	},

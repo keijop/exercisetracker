@@ -1,29 +1,26 @@
 const Exercise = require('../models/Exercise.js')
 const User = require('../models/User')
+const filter = require('../utils/objectFilter.js')
 
 const logExercise = async (req,res) => {
+
 	try{ 
 		//create obj and check if date is null, if null delete date prop 
 		const reqBody = Object.assign({}, req.body)
 		!reqBody.date ? delete reqBody.date : ''
-		console.log(req.body)
-		//pass obj to Exercise.create
-		const newExercise = await Exercise.create(reqBody)
-		const user = await User.findById(reqBody.userId)
-
-		//Object.assign(user, newExercise)
-
-
-		// create new user obj where __v prop is omitted
-		// create new exerc obj where __v and _id props are omitted
-		// clone both obj into new obj and format date 
-		const { __v, ...userDataObj } = user._doc
-		const { __v : v, _id, userId, ...exerciseDataObj } = newExercise._doc
-		const exerciseLogObj = Object.assign(userDataObj, exerciseDataObj)
-
-		exerciseLogObj.date = exerciseLogObj.date.toDateString()
 		
-		return res.json(exerciseLogObj)
+		//pass obj to Exercise.create
+		const user = await User.findById(reqBody[':_id'])
+		reqBody.username = user.username
+		const newExercise = await Exercise.create(reqBody)
+
+		//filter out props not being sent in response
+		const filteredUser = filter(user, ['_id', 'username'])
+		const filteredExercise = filter(newExercise, ['date', 'description', 'duration'])
+		const responseObj = Object.assign(filteredUser, filteredExercise)
+
+		
+		return res.json(responseObj)
 	}catch(error){
 		res.json({errorMsg : error.message})
 	}
