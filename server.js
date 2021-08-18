@@ -5,6 +5,7 @@ const connectDB = require('./db/connection')
 require('dotenv').config()
 const createUser = require('./controllers/createUser.js')
 const getUsers = require('./controllers/getUsers.js')
+const logExercise = require('./controllers/logExercise.js')
 const port = process.env.PORT || 3000
 
 app.use(cors())
@@ -32,16 +33,7 @@ app.get('/api/users/:_id/logs', (req,res) => {
 
 app.post('/api/users', createUser)
 
-app.post('/api/users/:_id/exercises', (req,res) => {
-  res.json({
-
-  // username: "username",
-  description: "test",
-  duration: 60,
-  date: "Mon Jan 01 1990",
-  _id: "_id"
-  })
-})
+app.post('/api/users/:_id/exercises', logExercise)
 
 const startServer = async () =>{
   try {
