@@ -3,17 +3,22 @@ const User = require('../models/User')
 const filter = require('../utils/objectFilter.js')
 
 const logExercise = async (req,res) => {
+	
 
 	try{ 
 		//create obj and check if date is null, if null delete date prop 
 		const reqBody = Object.assign({}, req.body)
+		console.log(reqBody)
+		reqBody[':_id'] = reqBody[':_id'].replace(/"/g,"")
+
 		!reqBody.date ? delete reqBody.date : ''
+		console.log(reqBody)
 		
 		//pass obj to Exercise.create
 		const user = await User.findById(reqBody[':_id'])
 		reqBody.username = user.username
 		const newExercise = await Exercise.create(reqBody)
-		console.log(newExercise)
+		
 
 		//filter out props not being sent in response
 		const filteredUser = filter(user, ['_id', 'username'])
@@ -26,6 +31,7 @@ const logExercise = async (req,res) => {
 	}catch(error){
 		res.status(500).json({errorMsg : error.message})
 	}
+	
 }
 
 module.exports = logExercise
