@@ -9,7 +9,8 @@ const logExercise = async (req,res) => {
 		//create obj and check if date is null, if null delete date prop 
 		const reqBody = Object.assign({}, req.body)
 		console.log(reqBody)
-		reqBody[':_id'] = reqBody[':_id'].replace(/"/g,"")
+		console.log(req.params)
+		
 
 		!reqBody.date ? delete reqBody.date : ''
 		console.log(reqBody)

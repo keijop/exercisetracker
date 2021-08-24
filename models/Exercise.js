@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const exerciseSchema = new mongoose.Schema({
 	username : {
 		type : String,
-		required : true
+		required : [true, 'Username is required']
 	},
 	duration : {
 		type : Number,
