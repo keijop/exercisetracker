@@ -8,15 +8,14 @@ const logExercise = async (req,res) => {
 	try{ 
 		//create obj and check if date is null, if null delete date prop 
 		const reqBody = Object.assign({}, req.body)
-		console.log(reqBody)
-		console.log(req.params)
+		
 		
 
 		!reqBody.date ? delete reqBody.date : ''
-		console.log(reqBody)
+		
 		
 		//pass obj to Exercise.create
-		const user = await User.findById(reqBody[':_id'])
+		const user = await User.findById(req.params)
 		reqBody.username = user.username
 		const newExercise = await Exercise.create(reqBody)
 		
