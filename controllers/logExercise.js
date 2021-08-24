@@ -21,9 +21,9 @@ const logExercise = async (req,res) => {
 		responseObj.date = responseObj.date.toDateString()
 
 		
-		return res.json(responseObj)
+		return res.status(201).json(responseObj)
 	}catch(error){
-		res.json({errorMsg : error.message})
+		res.status(500).json({errorMsg : error.message})
 	}
 }
 
