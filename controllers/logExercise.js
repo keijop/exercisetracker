@@ -18,6 +18,7 @@ const logExercise = async (req,res) => {
 		const filteredUser = filter(user, ['_id', 'username'])
 		const filteredExercise = filter(newExercise, ['date', 'description', 'duration'])
 		const responseObj = Object.assign(filteredUser, filteredExercise)
+		responseObj.date = responseObj.date.toDateString()
 
 		
 		return res.json(responseObj)
