@@ -4,10 +4,17 @@ const filter = require('../utils/objectFilter.js')
 
 
 const getExerciseLog = async (req,res) => {
+	console.log(req.query)
+	console.log(req.params)
 
 try	{	const { _id } = req.params
 		
 		const user = await User.findById(_id)
+
+		if(!user){
+			return res.status(404).json({error : `User with id ${_id} does not exist!`})
+		}
+
 		let exerciseLog = await Exercise.find({username : user.username})
 
 

@@ -13,6 +13,7 @@ const logExercise = async (req,res) => {
 		const user = await User.findById(reqBody[':_id'])
 		reqBody.username = user.username
 		const newExercise = await Exercise.create(reqBody)
+		console.log(newExercise)
 
 		//filter out props not being sent in response
 		const filteredUser = filter(user, ['_id', 'username'])
