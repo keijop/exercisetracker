@@ -8,17 +8,16 @@ const logExercise = async (req,res) => {
 	try{ 
 		//create obj and check if date is null, if null delete date prop 
 		const reqBody = Object.assign({}, req.body)
-		
-		
-
 		!reqBody.date ? delete reqBody.date : ''
 		
-		
+			console.log(reqBody)
+    		console.log(req.params)
+
 		//pass obj to Exercise.create
-		const user = await User.findById(req.params)
+		const id = req.params
+		const user = await User.findById(id)
 		reqBody.username = user.username
 		const newExercise = await Exercise.create(reqBody)
-		
 
 		//filter out props not being sent in response
 		const filteredUser = filter(user, ['_id', 'username'])
