@@ -1,11 +1,12 @@
 const Exercise = require('../models/Exercise.js')
 const User = require('../models/User')
 const filter = require('../utils/objectFilter.js')
+const queryFilterConstructor = require('../utils/queryFilterConstructor.js')
 
 
 const getExerciseLog = async (req,res) => {
-	console.log(req.query)
-	console.log(req.params)
+console.log(req.query)
+
 
 try	{	const { _id } = req.params
 		
@@ -15,7 +16,9 @@ try	{	const { _id } = req.params
 			return res.status(404).json({error : `User with id ${_id} does not exist!`})
 		}
 
-		let exerciseLog = await Exercise.find({username : user.username})
+		let exerciseLog = await Exercise.find(
+			queryFilterConstructor(user.username, req.query))
+		.limit(Number(req.query.limit))
 
 
 
