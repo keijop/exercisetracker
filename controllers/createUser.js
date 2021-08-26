@@ -12,7 +12,7 @@ const createUser = async (req,res) => {
   			return res.status(200).json({error : 'Username already in use'})
   		}
 	    const newUser = await User.create({username : username})
-	    console.log(newUser)
+	    
 	    res.status(201).json({username : newUser.username, _id : newUser._id})
  	} catch (err) {
   		res.status(500).json({errorMsg : err})

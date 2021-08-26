@@ -4,7 +4,7 @@ const getUsers = async (req,res) => {
   	try {
   		// find all users
 	    let userList = await User.find({})
-	    //map over users list and return user with only username and id 
+	    //map over users list and return only props: username and id 
 		userList = userList.map( user => {
   		const {_id, username} = user
   		return {username : username, _id : _id}
